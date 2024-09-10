@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-
+import { bd_con_service } from './utils_services/bd_con_service';
+import { send_mail_service } from './utils_services/send_mail_service';
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [MongooseModule.forRoot('mongodb://localhost/nest')],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, 
+      envFilePath: '.env', 
+    })
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, bd_con_service , send_mail_service],
 })
 export class AppModule {}
