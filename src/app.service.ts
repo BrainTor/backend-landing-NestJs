@@ -5,7 +5,7 @@ import { LocationModel } from './Models/location_model';
 export class AppService {
   private variant_of_ref  = Array.from(process.env.VARIANT_OF_REF.split(',')) 
   private choised: string
-  public async send_location(loc: string, ref: any, ip: string, time: string) {
+  public async send_location(loc: string, ref: any, ip: string, time: string, page:String) {
     switch (ref) {
       case this.variant_of_ref[0]:
         this.choised = "yandex"
@@ -25,6 +25,6 @@ export class AppService {
         break
     }
 
-    await new LocationModel({ location: loc, place: this.choised, ip: ip, time: time }).save()
+    await new LocationModel({ location: loc, place: this.choised, ip: ip, time: time, page:page}).save()
   }
 }

@@ -6,8 +6,8 @@ export class send_mail_service {
   private transporter: nodemailer.Transporter;
   constructor() {   
     this.transporter = nodemailer.createTransport({
-        host: 'smtp.yandex.com',  // Используем Yandex SMTP
-        port: 465,                // Порт SSL
+        host: 'smtp.yandex.com',  
+        port: 465,                
         secure: true,     
       auth: {
         user: process.env.EMAIL_SERVER,
@@ -17,12 +17,13 @@ export class send_mail_service {
  
   }
 
-  async sendMail_ads(phone_number:string): Promise<void> {
+  async sendMail_ads(phone_number:string, page:string): Promise<void> {
+    
     const mailOptions = {
       from: process.env.EMAIL_SERVER, 
       to: process.env.MY_EMAIl, 
       subject: "Кто-то воспользовался скидкой", 
-      text: `Кто-то повелся на скидку, его номер телефона: ${phone_number}`
+      text: `Кто-то повелся на скидку, его номер телефона: ${phone_number}, он с сайта ${page==null||page==undefined||page==""?"main":page}`
     };
 
     try {
@@ -32,7 +33,8 @@ export class send_mail_service {
     }
   }
 
-  async sendMail_question(name:string,third_name:string, adress:string, his_text:string): Promise<void> {
+  async sendMail_question(name:string,third_name:string, addres:string, his_text:string, page:string): Promise<void> {
+
     const mailOptions = {
       from: process.env.EMAIL_SERVER, 
       to: process.env.MY_EMAIl, 
@@ -41,8 +43,9 @@ export class send_mail_service {
       У кого - то вопрос, его данные <br>
       Имя - ${name}<br>
       Отчество - ${third_name}<br>
-      Связь - ${adress} <br>
-      Его текст:<br> ${his_text}
+      Связь - ${addres} <br>
+      Его текст:<br> ${his_text}<br>
+      Он с сайта ${page==null||page==undefined||page==""?"main":page}
       `
     }
 
